@@ -100,7 +100,7 @@ repositories {
 	else if (null != System.properties['local']) {
 		println "Using local public repository local-maven-public (maven-public + tagit-maven-public)" 
 	  maven {
-			url 'https://partner-nexus-cloud.tagitmobile.com/repository/maven-public/'
+			url 'https://nexus.inb.seliselocal.com/repository/maven-public/'
 			credentials {
         username "admin"
         password "Selise@12345#"
