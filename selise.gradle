@@ -3,8 +3,6 @@ println "[tagit] Applying common TagitCore v7.5 plug-ins, configurations and dep
 apply plugin: "eclipse"
 apply plugin: "project-report"
 
-//apply from: "https://raw.githubusercontent.com/tagitmobile/tagit-core-gradle/${tagitGradleVersion}/gradle/spotless/style.gradle"
-
 if (project.tasks.findByName('sonar')) {
   sonar {
     properties {
@@ -23,7 +21,6 @@ if (project.tasks.findByName('sonar')) {
         property "sonar.login", "01a86c235e09af8e5cee2260718e590295c6a933"        
 			}
 
-      // [rj.added 2024.06.18] follow the https://edocs1.tagitmobile.com/confluence/pages/viewpage.action?spaceKey=PPDG&title=Code+Quality+Guidelines
     	property("sonar.projectKey", "${group}:${rootProject.name}${project.path}:${removeSnapshot(project.version)}")
 			property("sonar.projectName", "${project.name}-${removeSnapshot(project.version)}")
     }
@@ -40,64 +37,16 @@ if (project.tasks.findByName('sonar')) {
 
 repositories {
   // [rj.added 2024.03.23] added support for cloud instances			
-	if (null != System.properties['partner-cloud']) {
+	if (null != System.properties['local']) {
 		println "Using partner-cloud public repository maven-public" 
 		maven {
-			url 'hhttps://nexus.inb.seliselocal.com/repository/maven-public/'
+			url 'https://nexus.inb.seliselocal.com/repository/maven-public/'
 			credentials {
         username "admin"
         password "Selise@12345#"
 			}		
-		} 
-	}
-	else if (null != System.properties['cloud']) {
-		println "Using cloud public repository maven-public" 
-		maven {
-				url 'https://nexus-cloud.tagitmobile.com/repository/maven-public/'
 		}
-	}
-	else if (null != System.properties['onprem']) {
-		println "Using on-prem public repository maven-public" 
-		maven {
-				url 'https://nexus-onprem.tagitmobile.com/repository/maven-public/'
-		}
-	}	
-	else if (null != System.properties['poc']) {
-		println "Using POC public repository maven-public" 
-		maven {
-				url 'https://nexus-poc.tagitmobile.com/repository/maven-public/'
-		}
-	}	
-	else if (null != System.properties['poc-test']) {
-		println "Using POC public repository maven-public" 
-		maven {
-				url 'https://nexus-poc.tagitmobile.com/repository/test-maven-public/'
-		}
-	}		
-	// [rj.added 2023.06.27] secure nexus repository for partner use
-	else if (null != System.properties['partner']) {
-		println "Using partner public repository maven-public" 
-		maven {
-				url 'https://partner-nexus.tagitmobile.com/repository/maven-public/'
-				credentials {
-          username findProperty("nexusUser") ?: ""
-          password findProperty("nexusPassword") ?: ""
-				}			
-		}
-	}
-	// [rj.added 2025.05.03] secure nexus repository for partner training use
-	else if (null != System.properties['training']) {
-		println "Using partner training public repository maven-public" 
-		maven {
-				url 'https://training-nexus.tagitmobile.com/repository/maven-public/'
-				credentials {
-          username findProperty("nexusUser") ?: ""
-          password findProperty("nexusPassword") ?: ""
-				}		
-		}
-	}
-	// [rj.added 2020.06.04] local nexus repository for offline work
-	else if (null != System.properties['local']) {
+	}	else {
 		println "Using local public repository local-maven-public (maven-public + tagit-maven-public)" 
 	  maven {
 			url 'https://nexus.inb.seliselocal.com/repository/maven-public/'
@@ -105,13 +54,9 @@ repositories {
         username "admin"
         password "Selise@12345#"
 			}
-		}	} else {
-		// [rj.added 2020.04.22] pull from Tagit Nexus Maven repository
-		maven {
-				url 'https://nexus.tagitmobile.com/repository/maven-public/'  
-		}
+    }
 	}
-  	mavenCentral()
+  mavenCentral()
 }
 
 configurations.all {
