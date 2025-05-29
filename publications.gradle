@@ -29,27 +29,16 @@ publishing {
     }
     repositories {
         maven {
-        	// [rj.added 2020.06.04] local nexus repository for offline work
-        	if (null != System.properties['local']) {
-	            def releasesRepoUrl = "https://nexus.inb.seliselocal.com/repository/maven-releases/"
-	            def snapshotsRepoUrl = "https://nexus.inb.seliselocal.com/repository/maven-snapshots/"
-	            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-				credentials {
-					username 'admin'
-					password 'Selise@12345#'
-				}
-	            allowInsecureProtocol = true
-	            println "[publications] Publish target will be local repository $url as $project.name:$version"
-        	} else {
-	            def releasesRepoUrl = "https://nexus.inb.seliselocal.com/repository/maven-releases/"
-	            def snapshotsRepoUrl = "https://nexus.inb.seliselocal.com/repository/maven-snapshots/"
-	            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-				credentials {
-					username 'admin'
-					password 'Selise@12345#'
-				}
-	            println "[publications] Publish target will be central repository $url as $project.name:$version"
-	        }
+        	// [rj.added 2020.06.04] local nexus repository for offline work        	
+			def releasesRepoUrl = "https://nexus.inb.seliselocal.com/repository/maven-releases/"
+			def snapshotsRepoUrl = "https://nexus.inb.seliselocal.com/repository/maven-snapshots/"
+			url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+			credentials {
+				username 'admin'
+				password 'Selise@12345#'
+			}
+			allowInsecureProtocol = true
+			println "[publications] Publish target will be local repository $url as $project.name:$version"		
         }
     }
 }

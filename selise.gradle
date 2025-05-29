@@ -37,25 +37,16 @@ if (project.tasks.findByName('sonar')) {
 
 repositories {
   // [rj.added 2024.03.23] added support for cloud instances			
-	if (null != System.properties['local']) {
-		println "Using partner-cloud public repository maven-public" 
-		maven {
-			url 'https://nexus.inb.seliselocal.com/repository/maven-public/'
-			credentials {
-        username "admin"
-        password "Selise@12345#"
-			}		
-		}
-	}	else {
-		println "Using local public repository local-maven-public (maven-public + tagit-maven-public)" 
-	  maven {
-			url 'https://nexus.inb.seliselocal.com/repository/maven-public/'
-			credentials {
-        username "admin"
-        password "Selise@12345#"
-			}
-    }
-	}
+	
+  println "Using partner-cloud public repository maven-public" 
+  maven {
+    url 'https://nexus.inb.seliselocal.com/repository/maven-public/'
+    credentials {
+      username "admin"
+      password "Selise@12345#"
+    }		
+  }
+	
   mavenCentral()
 }
 
